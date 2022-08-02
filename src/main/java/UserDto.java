@@ -1,10 +1,10 @@
 public class UserDto {
 
-    private String userId;
-    private String userPw;
-    private String name;
-    private int gusl;
-    private int id;
+    private String userId; // 유저id
+    private String userPw; // 패스워드
+    private String name; // 이름
+    private int gusl; // 구슬 갯수
+    private int id; // pk
 
     public void UserDto(String userId, String userPw, String name, int gusl, int id) {
         this.userId = userId;

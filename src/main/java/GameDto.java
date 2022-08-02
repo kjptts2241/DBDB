@@ -1,7 +1,7 @@
 public class GameDto {
-    private int userGu;
-    private int yourGu;
-    private int bet;
+    private int userGu; // 유저 구슬
+    private int yourGu; // 상대 구슬
+    private int bet; // 배팅 구슬
 
     public void gameDto(int userGu, int yourGu, int bet) {
         this.userGu = userGu;

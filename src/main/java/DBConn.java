@@ -15,6 +15,7 @@ public class DBConn {
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
+    int result = 0;
 
     // DB 연결
     public void DBconnect() {
@@ -104,7 +105,7 @@ public class DBConn {
             pstmt.setString(2, udto.getUserPw());
             pstmt.setString(3, udto.getName());
 
-            int result = pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
             if (result == 0) {
                 System.out.println("회원가입에 실패 하셨습니다.");
             } else {
@@ -139,7 +140,7 @@ public class DBConn {
             pstmt.setInt(1, gusl);
             pstmt.setInt(2, id);
 
-            int result = pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
             if (result == 0) {
                 System.out.println("데이터 저장에 실패 하였습니다.");
             } else {

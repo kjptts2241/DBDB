@@ -6,9 +6,11 @@ public class OddEven {
     int userGu = 10; // 유저가 가진 구슬 갯수
     int yourGu = 10; // 상대가 가진 구슬 갯수
     int bet = 0; // 유저가 배팅하는 변수
+    String dab; // 컴퓨터 답
+    String answer; // 유저의 답
 
-    Random random = new Random(); // 랜덤을 사용하기 위한 준비
-    Scanner sc = new Scanner(System.in); // 입력 받기 위한 준비
+    Random random = new Random();
+    Scanner sc = new Scanner(System.in);
     GameDto gdto = new GameDto();
 
     // 메소드
@@ -66,7 +68,7 @@ public class OddEven {
         // 컴퓨터가 문제를 낸다
         int rNum = random.nextInt(10) + 1; // 1~10까지의 숫자가 랜덤으로 나오게 된다
         // System.out.println("컴퓨타가 낸 문제(구슬갯수): " + rNum);
-        String dab = "짝"; // 상대의 답
+        dab = "짝"; // 상대의 답
         if (rNum % 2 == 1) {
             dab = "홀";
             // System.out.println("홀");
@@ -79,7 +81,6 @@ public class OddEven {
     // 유저가 하는 기능
     public String userTurn() {
         // 유저가 (홀, 짝) 답 입력
-        String answer; // 유저의 답
         while(true) {
             System.out.print("정답 입력(홀, 짝) >> ");
             answer = sc.next();
@@ -94,10 +95,8 @@ public class OddEven {
 
     // 정답 / 오답 판별
     public void correctAnswer() {
-        String dab = comTurn();
-        String answer = userTurn();
         // 맞을을 시, 틀렸을 시
-        if (answer.equals(dab)) { // 맞았을 시
+        if (userTurn().equals(comTurn())) { // 맞았을 시
             // 맞으면 구슬을 더하고 반복 / 틀리면 상대의 구슬을 뺀다
             gdto.userGuAdd();
             gdto.yourGuRemove();
@@ -107,7 +106,7 @@ public class OddEven {
             System.out.println("나의 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 구슬 갯수 : " + gdto.getYourGu());
             System.out.println("=======================================");
 
-        } else if (!answer.equals(dab)) { // 틀렸을 시
+        } else if (!userTurn().equals(comTurn())) { // 틀렸을 시
             // 틀리면 갯수를 빼고 반복 / 상대는 더한다
             gdto.userGuRemove();
             gdto.yourGuAdd();
