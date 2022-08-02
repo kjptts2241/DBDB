@@ -6,12 +6,10 @@ public class UserDto {
     private int gusl; // 구슬 갯수
     private int id; // pk
 
-    public void UserDto(String userId, String userPw, String name, int gusl, int id) {
+    public void UserDto(String userId, String userPw, String name) {
         this.userId = userId;
         this.userPw = userPw;
         this.name = name;
-        this.gusl = gusl;
-        this.id = id;
     }
 
     public String getUserId() {

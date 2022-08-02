@@ -9,26 +9,26 @@ public class MainClass {
         UserDto udto = new UserDto();
         GameDto gdto = new GameDto();
 
-        System.out.println("==============================");
+        System.out.println("=======================================");
         System.out.println("데이터 베이스");
         System.out.println("오징어 게임에 오신것을 환영합니다.");
 
         while(true) {
-            System.out.println("==============================");
+            System.out.println("=======================================");
             System.out.print("아이디가 있습니까?(Y/N) >> ");
             String IDWhether = sc.next();
 
             if (IDWhether.equalsIgnoreCase("N")) {
                 // 회원가입
-                System.out.println("==============================");
+                System.out.println("=======================================");
                 System.out.println("회원가입을 진행합니다.");
-                System.out.println("==============================");
+                System.out.println("=======================================");
                 System.out.print("아이디 입력: ");
                 String userId = sc.next();
-                System.out.println("==============================");
+                System.out.println("=======================================");
                 System.out.print("패스워드 입력: ");
                 String userPw = sc.next();
-                System.out.println("==============================");
+                System.out.println("=======================================");
                 System.out.print("이름 입력: ");
                 String name = sc.next();
 
@@ -38,12 +38,12 @@ public class MainClass {
             } else if (IDWhether.equalsIgnoreCase("Y")) {
                 // 로그인
                 while (true) {
-                    System.out.println("==============================");
+                    System.out.println("=======================================");
                     System.out.println("로그인을 진행합니다.");
-                    System.out.println("==============================");
+                    System.out.println("=======================================");
                     System.out.print("아이디 입력: ");
                     String login_userId = sc.next();
-                    System.out.println("==============================");
+                    System.out.println("=======================================");
                     System.out.print("패스워드 입력: ");
                     String login_userPw = sc.next();
 
@@ -58,19 +58,19 @@ public class MainClass {
         }
 
         OddEven game = new OddEven();
-        System.out.println("==============================");
+        System.out.println("=======================================");
         System.out.println("게임을 시작합니다.");
+
+        boolean gameOverCheck = game.gameOver(); // 게임 오버 체크
 
         game.intro(10, 10); // 구슬 게임
         while(game.gameOver()) {
             game.betting();
-            game.comTurn();
-            game.userTurn();
             game.correctAnswer();
         }
 
         // 게임 종료 후 저장 여부
-        if (!game.gameOver()) {
+        if (!gameOverCheck) {
 
             while(true) {
                 System.out.print("게임 데이터를 저장 하시겠습니까? (Y/N) >> ");
@@ -78,7 +78,7 @@ public class MainClass {
 
                 if (marbleSave.equalsIgnoreCase("Y")) {
                     db.gusl_update(gdto.getUserGu(), udto.getId());
-                    System.out.println("게임 데이터를 저장 하였습니다. 게임 종료합니다.");
+                    System.out.println("게임 종료합니다.");
                     break;
 
                 } else if (marbleSave.equalsIgnoreCase("N")) {

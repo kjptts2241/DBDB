@@ -36,8 +36,7 @@ public class DBConn {
     }
 
     // 로그인
-    public boolean login(String login_userId, String login_userPw) {
-        boolean logincheck = true; // 로그인 체크
+    public UserDto login(String login_userId, String login_userPw) {
         DBconnect();
 
         UserDto udto = new UserDto();
@@ -62,10 +61,9 @@ public class DBConn {
                 System.out.println(udto.getName() + " 님께서 로그인을 하셨습니다.");
                 System.out.println(udto.getName() + " 님은 현재 " + udto.getGusl() + " 개의 구슬을 소지하고 계십니다.");
 
-                logincheck = false;
             } else {
                 System.out.println("존재하지 않는 유저 정보입니다.");
-                logincheck = true;
+
             }
 
         } catch (SQLException e) {
@@ -86,16 +84,14 @@ public class DBConn {
                 e.printStackTrace();
             }
         }
-        return logincheck;
+        return udto;
     }
 
     // 회원가입
     public void save(String userId, String userPw, String name) {
         DBconnect();
         UserDto udto = new UserDto();
-        udto.setUserId(userId);
-        udto.setUserPw(userPw);
-        udto.setName(name);
+        udto.UserDto(userId, userPw, name);
 
         try {
             String sql = "INSERT INTO `game` (`userid`, `userpw`, `name`) VALUES (?, ?, ?);";
@@ -142,8 +138,10 @@ public class DBConn {
 
             result = pstmt.executeUpdate();
             if (result == 0) {
+                System.out.println("=======================================");
                 System.out.println("데이터 저장에 실패 하였습니다.");
             } else {
+                System.out.println("=======================================");
                 System.out.println("데이터 저장에 성공 하였습니다.");
             }
 

@@ -23,7 +23,6 @@ public class OddEven {
         System.out.println("이번 게임은 구슬 게임입니다.");
         System.out.println("당신과 나는 각각 10개의 구슬을 가지고 있습니다.");
         System.out.println("10개의 구슬 다 잃으면 죽습니다");
-        System.out.println("게임을 시작합니다.");
         System.out.println("배팅 하세요");
         System.out.println("=======================================");
 
@@ -106,7 +105,7 @@ public class OddEven {
             System.out.println("나의 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 구슬 갯수 : " + gdto.getYourGu());
             System.out.println("=======================================");
 
-        } else if (!userTurn().equals(comTurn())) { // 틀렸을 시
+        } else { // 틀렸을 시
             // 틀리면 갯수를 빼고 반복 / 상대는 더한다
             gdto.userGuRemove();
             gdto.yourGuAdd();
