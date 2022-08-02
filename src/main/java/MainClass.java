@@ -61,14 +61,16 @@ public class MainClass {
         System.out.println("==============================");
         System.out.println("게임을 시작합니다.");
 
-        game.intro(20, 20); // 구슬 게임
+        game.intro(10, 10); // 구슬 게임
         while(game.gameOver()) {
             game.betting();
             game.comTurn();
             game.userTurn();
             game.correctAnswer();
         }
-        if (!game.gameOver()) { // 게임 종료 후 저장 여부
+
+        // 게임 종료 후 저장 여부
+        if (!game.gameOver()) {
 
             while(true) {
                 System.out.print("게임 데이터를 저장 하시겠습니까? (Y/N) >> ");

@@ -40,15 +40,15 @@ public class OddEven {
         while (true) {
             try {
                 System.out.print("배팅 갯수 입력 >> ");
-                bet = sc.nextInt(); // 숫자를 입력 받아서 bet 변수에 저장
-                gdto.setBet(bet);
+                int bet = sc.nextInt(); // 숫자를 입력 받아서 bet 변수에 저장
                 // 만약 내가 가진 갯수 보다 많이 배팅을 하면
                 // 안된다 다시 배팅해라
                 if (gdto.getBet() > gdto.getUserGu()) {
                     System.out.println("소지하고 있는 구슬과 갯수가 맞지 않습니다");
-                } else if (gdto.getYourGu() < gdto.getBet()) {
+                } else if (gdto.getYourGu() < bet) {
                     System.out.println("배팅한 갯수가 상대의 구슬 보다 많습니다");
                 } else {
+                    gdto.setBet(bet); // 구슬 배팅 저장
                     System.out.println(gdto.getBet() + "개의 구슬 배팅");
                     System.out.println("=======================================");
                     break; // 무한 반복 종료
@@ -79,16 +79,25 @@ public class OddEven {
     // 유저가 하는 기능
     public String userTurn() {
         // 유저가 (홀, 짝) 답 입력
-        System.out.print("정답 입력(홀, 짝) >> ");
-        return sc.next();
+        String answer; // 유저의 답
+        while(true) {
+            System.out.print("정답 입력(홀, 짝) >> ");
+            answer = sc.next();
+            if(answer.equals("짝") || answer.equals("홀")) {
+                break;
+            } else {
+                System.out.println("[홀, 짝] 중 하나를 입력해주시기 바랍니다.");
+            }
+        }
+        return answer;
     }
 
     // 정답 / 오답 판별
     public void correctAnswer() {
         String dab = comTurn();
-        String uDab = userTurn();
+        String answer = userTurn();
         // 맞을을 시, 틀렸을 시
-        if (uDab.equals(dab)) { // 맞았을 시
+        if (answer.equals(dab)) { // 맞았을 시
             // 맞으면 구슬을 더하고 반복 / 틀리면 상대의 구슬을 뺀다
             gdto.userGuAdd();
             gdto.yourGuRemove();
@@ -98,7 +107,7 @@ public class OddEven {
             System.out.println("나의 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 구슬 갯수 : " + gdto.getYourGu());
             System.out.println("=======================================");
 
-        } else if (!uDab.equals(dab)) { // 틀렸을 시
+        } else if (!answer.equals(dab)) { // 틀렸을 시
             // 틀리면 갯수를 빼고 반복 / 상대는 더한다
             gdto.userGuRemove();
             gdto.yourGuAdd();
