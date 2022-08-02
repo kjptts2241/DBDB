@@ -6,16 +6,15 @@ public class OddEven {
     int userGu = 10; // 유저가 가진 구슬 갯수
     int yourGu = 10; // 상대가 가진 구슬 갯수
     int bet = 0; // 유저가 배팅하는 변수
-    int yourbet = 0; // 상대가 배팅하는 변수
-    boolean isMyturn = true;
 
     Random random = new Random(); // 랜덤을 사용하기 위한 준비
     Scanner sc = new Scanner(System.in); // 입력 받기 위한 준비
+    GameDto gdto = new GameDto();
 
     // 메소드
 
     // 인트로
-    public void intro() {
+    public void intro(int userGu, int yourGu) {
         // 인트로
         System.out.println("=======================================");
         System.out.println("오징어 게임에 오신것을 환영합니다");
@@ -26,8 +25,12 @@ public class OddEven {
         System.out.println("배팅 하세요");
         System.out.println("=======================================");
 
+        // 배팅 구슬 설정
+        gdto.setUserGu(userGu); // 나의 구슬
+        gdto.setYourGu(yourGu); // 상대방의 구슬
+
         // 현재 구슬 상황
-        System.out.println("나의 시작 구슬 갯수 : " + userGu + " / 상대의 시작 구슬 갯수 : " + yourGu);
+        System.out.println("나의 시작 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 시작 구슬 갯수 : " + gdto.getYourGu());
         System.out.println("=======================================");
     }
 
@@ -36,22 +39,19 @@ public class OddEven {
         // 배팅 시작
         while (true) {
             try {
-                if (isMyturn) {
-                    System.out.print("배팅 갯수 입력 >> ");
-                    bet = sc.nextInt(); // 숫자를 입력 받아서 bet 변수에 저장
-                    // 만약 내가 가진 갯수 보다 많이 배팅을 하면
-                    // 안된다 다시 배팅해라
-                    if (bet > userGu) {
-                        System.out.println("소지하고 있는 구슬과 갯수가 맞지 않습니다");
-                    } else if (yourGu < bet) {
-                        System.out.println("배팅한 갯수가 상대의 구슬 보다 많습니다");
-                    } else {
-                        System.out.println(bet + "개의 구슬 배팅");
-                        System.out.println("=======================================");
-                        break; // 무한 반복 종료
-                    }
-                } else { // 상대 턴
-                    yourbet = random.nextInt(20 - userGu) + 1;
+                System.out.print("배팅 갯수 입력 >> ");
+                bet = sc.nextInt(); // 숫자를 입력 받아서 bet 변수에 저장
+                gdto.setBet(bet);
+                // 만약 내가 가진 갯수 보다 많이 배팅을 하면
+                // 안된다 다시 배팅해라
+                if (gdto.getBet() > gdto.getUserGu()) {
+                    System.out.println("소지하고 있는 구슬과 갯수가 맞지 않습니다");
+                } else if (gdto.getYourGu() < gdto.getBet()) {
+                    System.out.println("배팅한 갯수가 상대의 구슬 보다 많습니다");
+                } else {
+                    System.out.println(gdto.getBet() + "개의 구슬 배팅");
+                    System.out.println("=======================================");
+                    break; // 무한 반복 종료
                 }
             } catch (Exception e) {
                 System.out.println("숫자만 입력하세요!!");
@@ -90,22 +90,22 @@ public class OddEven {
         // 맞을을 시, 틀렸을 시
         if (uDab.equals(dab)) { // 맞았을 시
             // 맞으면 구슬을 더하고 반복 / 틀리면 상대의 구슬을 뺀다
-            userGu += bet;
-            yourGu -= bet;
-            System.out.println(bet + "개의 구슬을 획득 했습니다.");
+            gdto.userGuAdd();
+            gdto.yourGuRemove();
+            System.out.println(gdto.getBet() + "개의 구슬을 획득 했습니다.");
             System.out.println("정답입니다");
             System.out.println("=======================================");
-            System.out.println("나의 구슬 갯수 : " + userGu + " / 상대의 구슬 갯수 : " + yourGu);
+            System.out.println("나의 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 구슬 갯수 : " + gdto.getYourGu());
             System.out.println("=======================================");
 
         } else if (!uDab.equals(dab)) { // 틀렸을 시
             // 틀리면 갯수를 빼고 반복 / 상대는 더한다
-            userGu -= bet;
-            yourGu += bet;
-            System.out.println(bet + "개의 구슬을 뺏겼습니다.");
+            gdto.userGuRemove();
+            gdto.yourGuAdd();
+            System.out.println(gdto.getBet() + "개의 구슬을 뺏겼습니다.");
             System.out.println("오답입니다");
             System.out.println("=======================================");
-            System.out.println("나의 구슬 갯수 : " + userGu + " / 상대의 구슬 갯수 : " + yourGu);
+            System.out.println("나의 구슬 갯수 : " + gdto.getUserGu() + " / 상대의 구슬 갯수 : " + gdto.getYourGu());
             System.out.println("=======================================");
         }
     }
@@ -114,11 +114,11 @@ public class OddEven {
     public boolean gameOver() {
         boolean isGameOver = true;
         // 내가 가진 구슬의 갯수가 20이 되면 승리
-        if (userGu >= 20) {
+        if (gdto.getUserGu() >= 20) {
             System.out.println("이겼습니다.");
             System.out.println("=======================================");
             isGameOver = false;
-        } else if (userGu <= 0) { // 내가 가진 구슬이 갯수가 0이 되면 패배
+        } else if (gdto.getUserGu() <= 0) { // 내가 가진 구슬이 갯수가 0이 되면 패배
             System.out.println("졌습니다.");
             System.out.println("=======================================");
             isGameOver = false;
