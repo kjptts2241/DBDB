@@ -71,25 +71,22 @@ public class MainClass {
         }
 
         // 게임 종료 후 저장 여부
-        if (game.gameOver() == false) {
+        while(true) {
+            System.out.print("게임 데이터를 저장 하시겠습니까? (Y/N) >> ");
+            String marbleSave = sc.next();
 
-            while(true) {
-                System.out.print("게임 데이터를 저장 하시겠습니까? (Y/N) >> ");
-                String marbleSave = sc.next();
+            if (marbleSave.equalsIgnoreCase("Y")) {
+                db.gusl_update(gdto.getUserGu(), udto.getId());
+                System.out.println("게임 종료합니다.");
+                break;
 
-                if (marbleSave.equalsIgnoreCase("Y")) {
-                    db.gusl_update(gdto.getUserGu(), udto.getId());
-                    System.out.println("게임 종료합니다.");
-                    break;
+            } else if (marbleSave.equalsIgnoreCase("N")) {
+                System.out.println("게임 종료합니다.");
+                break;
 
-                } else if (marbleSave.equalsIgnoreCase("N")) {
-                    System.out.println("게임 종료합니다.");
-                    break;
-
-                }
-
-                System.out.println("Y/N 중 하나를 선택해 주시기 바랍니다.");
             }
+
+            System.out.println("Y/N 중 하나를 선택해 주시기 바랍니다.");
         }
 
         // 만약에 y이면 아이디 입력으로
