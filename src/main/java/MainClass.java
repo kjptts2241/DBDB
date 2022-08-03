@@ -47,8 +47,11 @@ public class MainClass {
                     System.out.print("패스워드 입력: ");
                     String login_userPw = sc.next();
 
-                    boolean logincheck = db.login(login_userId, login_userPw); // 로그인 함수
-                    if (!logincheck) { // 로그인 성공 시
+                    udto = db.login(login_userId, login_userPw); // 로그인 함수
+                    if (udto.getName() == null) { // 로그인 실패 시
+                        System.out.println("로그인을 실패하였습니다.");
+                    } else { // 로그인 성공 시
+                        System.out.println(udto.getName() + " 님은 현재 " + udto.getGusl() + " 개의 구슬을 소지하고 계십니다.");
                         break;
                     }
                 }
@@ -61,8 +64,6 @@ public class MainClass {
         System.out.println("=======================================");
         System.out.println("게임을 시작합니다.");
 
-        boolean gameOverCheck = game.gameOver(); // 게임 오버 체크
-
         game.intro(10, 10); // 구슬 게임
         while(game.gameOver()) {
             game.betting();
@@ -70,7 +71,7 @@ public class MainClass {
         }
 
         // 게임 종료 후 저장 여부
-        if (!gameOverCheck) {
+        if (game.gameOver() == false) {
 
             while(true) {
                 System.out.print("게임 데이터를 저장 하시겠습니까? (Y/N) >> ");

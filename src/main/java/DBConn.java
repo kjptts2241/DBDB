@@ -59,7 +59,6 @@ public class DBConn {
                 udto.setId(rs.getInt("id"));
                 System.out.println("==============================");
                 System.out.println(udto.getName() + " 님께서 로그인을 하셨습니다.");
-                System.out.println(udto.getName() + " 님은 현재 " + udto.getGusl() + " 개의 구슬을 소지하고 계십니다.");
 
             } else {
                 System.out.println("존재하지 않는 유저 정보입니다.");
